@@ -17,53 +17,54 @@ localVue.component('font-awesome-icon', FontAwesomeIcon);
 localVue.component('router-link', {});
 
 jest.mock('axios', () => ({
-    get: jest.fn(),
-    put: jest.fn()
+  get: jest.fn(),
+  put: jest.fn()
 }));
-jest.mock('@/constants.ts', () =>({
-    SERVER_API_URL: ''
+jest.mock('@/constants.ts', () => ({
+  SERVER_API_URL: ''
 }));
 
 describe('UserManagementView Component', () => {
-    let wrapper;
-    let comp;
+  let wrapper;
+  let comp;
 
-    beforeEach(() => {
-        wrapper = shallowMount(UserManagementViewComponent, { store, i18n, localVue });
-        comp = wrapper.vm;
+  beforeEach(() => {
+    wrapper = shallowMount(UserManagementViewComponent, { store, i18n, localVue });
+    comp = wrapper.vm;
+  });
+
+  it('should be a Vue instance', () => {
+    expect(wrapper.isVueInstance()).toBeTruthy();
+  });
+
+  describe('OnInit', () => {
+    it('Should call load all on init', async () => {
+      // GIVEN
+      const userData = {
+        id: 1,
+        login: 'user',
+        firstName: 'first',
+        lastName: 'last',
+        email: 'first@last.com',
+        activated: true,
+        langKey: 'en',
+        authorities: ['ROLE_USER'],
+        createdBy: 'admin',
+        createdDate: null,
+        lastModifiedBy: null,
+        lastModifiedDate: null,
+        password: null
+      };
+      mockedAxios.get.mockReturnValue(Promise.resolve({ data: userData }));
+
+      // WHEN
+      comp.init(1);
+      await comp.$nextTick();
+
+      // THEN
+      expect(mockedAxios.get).toHaveBeenCalledWith(`api/users/1`);
+      expect(comp.user).toEqual(userData);
     });
-
-    it('should be a Vue instance', () => {
-        expect(wrapper.isVueInstance()).toBeTruthy();
-    });
-
-    describe('OnInit', () => {
-        it('Should call load all on init', async () => {
-            // GIVEN
-            const userData = {
-                id: 1,
-                login: 'user',
-                firstName: 'first',
-                lastName: 'last',
-                email: 'first@last.com',
-                activated: true,
-                langKey: 'en',
-                authorities: ['ROLE_USER'],
-                createdBy: 'admin',
-                createdDate: null,
-                lastModifiedBy: null,
-                lastModifiedDate: null,
-                password: null
-            };
-            mockedAxios.get.mockReturnValue(Promise.resolve({data: userData}));
-
-            // WHEN
-            comp.init(1);
-            await comp.$nextTick();
-
-            // THEN
-            expect(mockedAxios.get).toHaveBeenCalledWith(`api/users/1`);
-            expect(comp.user).toEqual(userData);
-        });
-    });
+  });
 });
+>

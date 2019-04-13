@@ -82,7 +82,9 @@ describe('<%= entityClass %> e2e test', () => {
     const heading = await <%= entityInstance %>ComponentsPage.getTitle();
     await waitUntilDisplayed(heading);
     expect(await heading.getText()).not.to.be.empty;
+    console.log('<%= entityInstance %> nbButtonsBeforeCreate before=' + nbButtonsBeforeCreate)
     nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+    console.log('<%= entityInstance %> nbButtonsBeforeCreate after=' + nbButtonsBeforeCreate)
   });
 
   it('should load create <%= entityClass %> page', async () => {

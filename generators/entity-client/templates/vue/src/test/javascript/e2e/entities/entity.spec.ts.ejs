@@ -81,10 +81,21 @@ describe('<%= entityClass %> e2e test', () => {
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
     const heading = await <%= entityInstance %>ComponentsPage.getTitle();
     await waitUntilDisplayed(heading);
+
+    const footer = await <%= entityInstance %>ComponentsPage.getFooter();
+    await waitUntilDisplayed(footer);
+    
     expect(await heading.getText()).not.to.be.empty;
     console.log('<%= entityInstance %> nbButtonsBeforeCreate before=' + nbButtonsBeforeCreate)
     nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
     console.log('<%= entityInstance %> nbButtonsBeforeCreate after=' + nbButtonsBeforeCreate)
+    
+    // force to recalculate in case of value still 0, to be sure...
+    if (nbButtonsBeforeCreate === 0) {
+      console.log('<%= entityInstance %> nbButtonsBeforeCreate before=' + nbButtonsBeforeCreate)
+      nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+      console.log('<%= entityInstance %> nbButtonsBeforeCreate after=' + nbButtonsBeforeCreate)
+    }
   });
 
   it('should load create <%= entityClass %> page', async () => {

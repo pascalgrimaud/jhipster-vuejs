@@ -86,15 +86,12 @@ describe('<%= entityClass %> e2e test', () => {
     await waitUntilDisplayed(footer);
     
     expect(await heading.getText()).not.to.be.empty;
-    console.log('<%= entityInstance %> nbButtonsBeforeCreate before=' + nbButtonsBeforeCreate)
     nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
-    console.log('<%= entityInstance %> nbButtonsBeforeCreate after=' + nbButtonsBeforeCreate)
     
-    // force to recalculate in case of value still 0, to be sure...
+    // Bug-fix with Protractor.
+    // force to recalculate in case of value is still 0
     if (nbButtonsBeforeCreate === 0) {
-      console.log('<%= entityInstance %> nbButtonsBeforeCreate before=' + nbButtonsBeforeCreate)
       nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
-      console.log('<%= entityInstance %> nbButtonsBeforeCreate after=' + nbButtonsBeforeCreate)
     }
   });
 

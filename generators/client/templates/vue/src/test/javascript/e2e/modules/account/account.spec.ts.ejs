@@ -13,6 +13,7 @@ import {
   getModifiedDateSortButton,
   <%_ } _%>
   waitUntilDisplayed,
+  waitUntilClickable,
   waitUntilHidden,
   getUserDeleteButtonByLogin,
   getUserDetailsButtonByLogin,
@@ -144,12 +145,12 @@ describe('Account', () => {
 <%_ if (databaseType !== 'cassandra') { _%>
 
     const modifiedDateSortButton = getModifiedDateSortButton();
-    await waitUntilDisplayed(modifiedDateSortButton);
+    await waitUntilClickable(modifiedDateSortButton);
     await modifiedDateSortButton.click();
 <%_ } _%>
 
     const deactivatedButton = getUserDeactivatedButtonByLogin('user_test');
-    await waitUntilDisplayed(deactivatedButton);
+    await waitUntilClickable(deactivatedButton);
     await deactivatedButton.click();
     await waitUntilHidden(deactivatedButton);
 
@@ -341,7 +342,7 @@ describe('Account', () => {
   it('should preview details from previously created fake user', async () => {
     await browser.get('/admin/user-management');
     const detailsBtn = getUserDetailsButtonByLogin('user_test');
-    await waitUntilDisplayed(detailsBtn);
+    await waitUntilClickable(detailsBtn);
     await detailsBtn.click();
 
     const detailsHeading = element(by.css('h2.jh-entity-heading'));
@@ -353,7 +354,7 @@ describe('Account', () => {
   it('should edit details from previously created fake user', async () => {
     await browser.get('/admin/user-management');
     const editBtn = getUserEditButtonByLogin('user_test');
-    await waitUntilDisplayed(editBtn);
+    await waitUntilClickable(editBtn);
     await editBtn.click();
 
     const editHeading = element(by.css('h2#myUserLabel'));
@@ -373,7 +374,7 @@ describe('Account', () => {
   it('should delete previously created fake user', async () => {
     await browser.get('/admin/user-management');
     const deleteBtn = getUserDeleteButtonByLogin('user_test');
-    await waitUntilDisplayed(deleteBtn);
+    await waitUntilClickable(deleteBtn);
     await deleteBtn.click();
 
     const deleteModal = element(by.className('modal'));

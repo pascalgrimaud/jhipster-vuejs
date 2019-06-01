@@ -77,21 +77,36 @@ describe('<%= entityClass %> e2e test', () => {
   });
 
   it('should load <%= entityClassPlural %>', async () => {
+    console.log('await navBarPage.getEntityPage');
     await navBarPage.getEntityPage('<%= entityStateName %>');
     <%= entityInstance %>ComponentsPage = new <%= entityClass %>ComponentsPage();
+    console.log('getTitle');
     const heading = await <%= entityInstance %>ComponentsPage.getTitle();
+    console.log('wait until displayed');
     await waitUntilDisplayed(heading);
 
+    console.log('getFooter');
     const footer = await <%= entityInstance %>ComponentsPage.getFooter();
+    console.log('wait until displayed');
     await waitUntilDisplayed(footer);
     
+    console.log('getText not to be empty');
     expect(await heading.getText()).not.to.be.empty;
+    console.log('countDeleteButtons');
     nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+    console.log('nbButtonsBeforeCreate=' + nbButtonsBeforeCreate);
     
     // Bug-fix with Protractor.
     // force to recalculate in case of value is still 0
     if (nbButtonsBeforeCreate === 0) {
+      console.log('countDeleteButtons');
       nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+      console.log('nbButtonsBeforeCreate=' + nbButtonsBeforeCreate);
+      if (nbButtonsBeforeCreate === 0) {
+        console.log('countDeleteButtons');
+        nbButtonsBeforeCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+        console.log('nbButtonsBeforeCreate=' + nbButtonsBeforeCreate);
+      }
     }
   });
 

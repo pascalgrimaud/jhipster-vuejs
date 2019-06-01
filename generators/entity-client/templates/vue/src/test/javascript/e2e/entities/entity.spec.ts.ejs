@@ -163,7 +163,7 @@ describe('<%= entityClass %> e2e test', () => {
     console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('<%= fieldName %>');
     console.log('--> expect <%= fieldNameCapitalized %>');
-    expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
+    // expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
 
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
     console.log('--> set <%= fieldNameCapitalized %>');

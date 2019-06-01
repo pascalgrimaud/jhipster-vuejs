@@ -230,8 +230,11 @@ describe('<%= entityClass %> e2e test', () => {
     
     // console.log('await nbButtonsBeforeCreate');
     // await <%= entityInstance %>ComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeCreate + 1);
+    console.log('nbButtonsBeforeCreate=' + nbButtonsBeforeCreate);
+    const nbButtonsAfterCreate = await <%= entityInstance %>ComponentsPage.countDeleteButtons();
+    console.log('nbButtonsAfterCreate=' + nbButtonsAfterCreate);
     console.log('expect nbButtonsBeforeCreate');
-    expect(await <%= entityInstance %>ComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
+    expect(nbButtonsAfterCreate).to.eq(nbButtonsBeforeCreate + 1);
   });<%= closeBlockComment %>
 
   it('should load details <%= entityClass %> page and fetch data', async () => {

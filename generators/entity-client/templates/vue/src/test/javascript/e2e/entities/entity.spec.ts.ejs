@@ -126,19 +126,27 @@ describe('<%= entityClass %> e2e test', () => {
     _%>
 
     <%_ if (['Integer', 'Long', 'Float', 'Double', 'BigDecimal'].includes(fieldType)) { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('5');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.eq('5');
 
     <%_ } else if (fieldType === 'LocalDate') { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('01-01-2001');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.eq('2001-01-01');
 
     <%_ } else if (['Instant', 'ZonedDateTime'].includes(fieldType)) { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('01/01/2001' + protractor.Key.TAB + '02:30AM');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.contain('2001-01-01T02:30');
 
     <%_ } else if (fieldType === 'Duration') { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('PT12S');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.contain('12');
 
     <%_ } else if (fieldType === 'Boolean') { _%>
@@ -152,21 +160,29 @@ describe('<%= entityClass %> e2e test', () => {
     }
 
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType) && fieldTypeBlobContent === 'text') { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('<%= fieldName %>');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
 
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input(absolutePath);
 
     <%_ } else if (fieldIsEnum) { _%>
+    console.log('--> set <%= fieldName %>');
     await <%= entityInstance %>UpdatePage.<%=fieldName %>SelectLastOption();
 
     <%_ } else if (fieldType === 'UUID'){ _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('64c99148-3908-465d-8c4a-e510e3ade974');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/64c99148-3908-465d-8c4a-e510e3ade974/);
 
     <%_ } else { _%>
+    console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('<%= fieldName %>');
+    console.log('--> expect <%= fieldNameCapitalized %>');
     expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
 
     <%_ } _%>
@@ -196,19 +212,24 @@ describe('<%= entityClass %> e2e test', () => {
   });<%= closeBlockComment %>
 
   it('should load details <%= entityClass %> page and fetch data', async () => {
+    console.log('clickOnLastDetailsButton');
     await <%= entityInstance %>ComponentsPage.clickOnLastDetailsButton();
     <%= entityInstance %>DetailsPage = new <%= entityClass %>DetailsPage();
 
+    console.log('getPageTitle');
     const heading = await <%= entityInstance %>DetailsPage.getPageTitle();
     await waitUntilDisplayed(heading);
 
+    console.log('getFooter');
     const footer = await <%= entityInstance %>UpdatePage.getFooter();
     await waitUntilDisplayed(footer);
     
+    console.log('getBackButton');
     await waitUntilDisplayed(await <%= entityInstance %>DetailsPage.getBackButton());
     expect(await heading.getText()).not.to.be.empty;
 
-    const firstDetail = <%= entityInstance %>DetailsPage.getFirstDetail();
+    console.log('firstDetail');
+    const firstDetail = <%= entityInstance %>DetailsPage.getBackButton();
     expect(await firstDetail.getText()).not.to.be.empty;
 
     await <%= entityInstance %>DetailsPage.getBackButton().click();

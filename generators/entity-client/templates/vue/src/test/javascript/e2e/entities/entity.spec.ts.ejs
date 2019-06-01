@@ -163,7 +163,7 @@ describe('<%= entityClass %> e2e test', () => {
     console.log('--> set <%= fieldNameCapitalized %>');
     await <%= entityInstance %>UpdatePage.set<%= fieldNameCapitalized %>Input('<%= fieldName %>');
     console.log('--> expect <%= fieldNameCapitalized %>');
-    // expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
+    expect(await <%= entityInstance %>UpdatePage.get<%= fieldNameCapitalized %>Input()).to.match(/<%= fieldName %>/);
 
     <%_ } else if (['byte[]', 'ByteBuffer'].includes(fieldType)) { _%>
     console.log('--> set <%= fieldNameCapitalized %>');
@@ -198,16 +198,24 @@ describe('<%= entityClass %> e2e test', () => {
     <%_ } _%>
     <%_ }); _%>
 
+    console.log('click on save');
     await <%= entityInstance %>UpdatePage.save();
+    console.log('wait until save hidden');
     await waitUntilHidden(await <%= entityInstance %>UpdatePage.getSaveButton());
+    console.log('wait save to be false');
     expect(await <%= entityInstance %>UpdatePage.isSaveButtonPresent()).to.be.false;
 
+    console.log('getSuccessToast');
     const toast = getSuccessToast();
+    console.log('await waitUntilDisplayed(toast)');
     await waitUntilDisplayed(toast);
     // Success toast should appear
+    console.log('toast is present to be true');
     expect(await toast.isPresent()).to.be.true;
     
+    console.log('await nbButtonsBeforeCreate');
     await <%= entityInstance %>ComponentsPage.waitUntilDeleteButtonsLength(nbButtonsBeforeCreate + 1);
+    console.log('expect nbButtonsBeforeCreate');
     expect(await <%= entityInstance %>ComponentsPage.countDeleteButtons()).to.eq(nbButtonsBeforeCreate + 1);
   });<%= closeBlockComment %>
 

@@ -1,3 +1,5 @@
+Test GitHub Actions Builds
+
 <div align="center">
   <a href="https://www.jhipster.tech/">
     <img src="https://github.com/jhipster/jhipster-artwork/blob/master/logos/JHipster%20RGB-small100x25px.png?raw=true">

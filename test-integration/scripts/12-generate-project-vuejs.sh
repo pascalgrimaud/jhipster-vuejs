@@ -33,3 +33,5 @@ jhipster --force --no-insight --skip-checks --with-entities --from-cli --bluepri
 ls -al "$JHI_FOLDER_APP"
 
 cat src/main/webapp/app/main.ts
+npm run prettier:format
+cat src/main/webapp/app/main.ts

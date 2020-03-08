@@ -28,6 +28,7 @@
     "generator-jhipster": "6.8.0",
     "glob": "7.1.2",
     "gulp-filter": "5.1.0",
+    "inquirer": "7.0.4",
     "insight": "0.10.1",
     "jhipster-core": "6.0.4",
     "js-yaml": "3.13.1",

@@ -31,3 +31,5 @@ cd "$JHI_FOLDER_APP"
 npm link generator-jhipster-vuejs
 jhipster --force --no-insight --skip-checks --with-entities --from-cli --blueprint vuejs
 ls -al "$JHI_FOLDER_APP"
+
+cat src/main/webapp/app/main.ts
